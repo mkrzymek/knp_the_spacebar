@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Michelf\MarkdownInterface;
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -26,7 +26,7 @@ class ArticleController extends AbstractController
      */
     public function show(
         $slug,
-        MarkdownInterface $markdown,
+        MarkdownParserInterface $markdown,
         AdapterInterface $cache
 //        , Environment $twigEnvironment
     )
@@ -61,6 +61,7 @@ EOF;
         }
 
         $articleContent = $item->get();
+        dump($markdown);die;
 
         return $this->render('article/show.html.twig',
             [
