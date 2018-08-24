@@ -28,6 +28,7 @@ class ArticleController extends AbstractController
             'deserunt mollit anim id est laborum.'
         ];
 
+//        dump($slug,$this, $GLOBALS);
 
         return $this->render('article/show.html.twig',
             [
