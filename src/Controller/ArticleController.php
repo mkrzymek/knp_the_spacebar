@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MarkdownHelper;
-use Nexy\Slack\Client;
+use App\Service\SlackClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,18 +34,12 @@ class ArticleController extends AbstractController
     public function show(
         $slug,
         MarkdownHelper $markdownHelper,
-        Client $slack
+        SlackClient $slack
 //        , Environment $twigEnvironment
     )
     {
         if ($slug == 'khaaaan') {
-
-            $message = $slack->createMessage()
-                ->from('Khan')
-                ->withIcon(':ghost:')
-                ->setText('Ah, Kirk, my old friend...');
-
-            $slack->sendMessage($message);
+            $slack->sendMessage('Khan', 'Wysyłam do slaczka wiadomość');
         }
 
         $comments = [
