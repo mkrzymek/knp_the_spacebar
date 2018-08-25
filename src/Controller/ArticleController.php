@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
+use App\Service\MarkdownHelper;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,8 +25,7 @@ class ArticleController extends AbstractController
      */
     public function show(
         $slug,
-        MarkdownParserInterface $markdown,
-        AdapterInterface $cache
+        MarkdownHelper $markdownHelper
 //        , Environment $twigEnvironment
     )
     {
@@ -53,14 +51,7 @@ aliquip capicola officia. Labore deserunt esse chicken lorem shoulder tail conse
 Pig hamburger pork belly enim. Do porchetta minim capicola irure pancetta chuck fugiat.
 EOF;
 
-        $item = $cache->getItem('markdown_'.md5($articleContent));
-
-        if(!$item->isHit()) {
-            $item->set($markdown->transform($articleContent));
-            $cache->save($item);
-        }
-
-        $articleContent = $item->get();
+        $articleContent = $markdownHelper->parse($articleContent);
 
         return $this->render('article/show.html.twig',
             [
