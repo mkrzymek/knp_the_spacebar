@@ -12,6 +12,13 @@ use Twig\Environment;
 
 class ArticleController extends AbstractController
 {
+    private $isDebug;
+
+    public function __construct(bool $isDebug)
+    {
+        $this->isDebug = $isDebug;
+    }
+
     /**
      * @Route("/", name="app_homepage")
      */
