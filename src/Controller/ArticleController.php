@@ -78,6 +78,6 @@ class ArticleController extends AbstractController
 
         $logger->info('Article is being hearted');
 
-        return $this->json(['hearts' => $article->getHeartCount()]); // or return new JsonResponse(...
+        return $this->json(['hearts' => $article->getHeartCount()]); //  or return new JsonResponse(...
     }
 }
