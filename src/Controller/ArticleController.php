@@ -33,31 +33,27 @@ class ArticleController extends AbstractController
         $articles = $repository->findAllPublishedOrderedByNewest();
 
         return $this->render('article/homepage.html.twig', [
-                'articles' => $articles
-            ]);
+            'articles' => $articles
+        ]);
     }
 
     /**
      * @Route("/news/{slug}", name="article_show")
      */
-    public function show(
-        $slug,
-        SlackClient $slack,
-        EntityManagerInterface $em
-//        , Environment $twigEnvironment
-    )
+    public function show(Article $article, SlackClient $slack)
     {
-        if ($slug == 'khaaaan') {
+        if ($article->getSlug() == 'khaaaan') {
             $slack->sendMessage('Khan', 'Wysyłam do slaczka wiadomość');
         }
 
-        $repository = $em->getRepository(Article::class);
-        /** @var Article $article */
-        $article = $repository->findOneBy(['slug' => $slug]);
-
-        if (!$article) {
-            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
-        }
+//        the same job doing $article
+//        $repository = $em->getRepository(Article::class);
+//        /** @var Article $article */
+//        $article = $repository->findOneBy(['slug' => $slug]);
+//
+//        if (!$article) {
+//            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
+//        }
 
         $comments = [
             'dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla',
@@ -70,16 +66,6 @@ class ArticleController extends AbstractController
                 'article' => $article,
                 'comments' => $comments
             ]);
-
-        // Dont do that! :D
-//        $html = $twigEnvironment->render('article/show.html.twig',
-//            [
-//                'title' => ucwords(str_replace('-', ' ', $slug)),
-//                'slug' => $slug,
-//                'comments' => $comments
-//            ]);
-//
-//        return new Response($html);
     }
 
     /**
