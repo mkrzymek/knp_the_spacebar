@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Service\MarkdownHelper;
 use App\Service\SlackClient;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,11 +56,11 @@ class ArticleController extends AbstractController
 //            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
 //        }
 
-        $comments = [
-            'dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla',
-            'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia',
-            'deserunt mollit anim id est laborum.'
-        ];
+        $comments = [];
+        foreach ($article->getComments() as $comment) {
+            $comments[] = $comment->getContent();
+        }
+//        dump($comments);die;
 
         return $this->render('article/show.html.twig',
             [
