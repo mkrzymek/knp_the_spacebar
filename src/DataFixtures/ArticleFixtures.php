@@ -55,23 +55,8 @@ EOF
             $article->setAuthor($this->faker->randomElement(self::$articleAuthors))
                 ->setHeartCount($this->faker->numberBetween(5, 100))
                 ->setImageFilename($this->faker->randomElement(self::$articleImages));
-
-            $comment1 = new Comment();
-            $comment1->setAuthorName('David Backham')
-                ->setContent('David comment! :D')
-                ->setArticle($article);
-
-            $manager->persist($comment1);
-
-            $comment2 = new Comment();
-            $comment2->setAuthorName('Andrea Pirlo')
-                ->setContent('Andrea comment! :D')
-                ->setArticle($article);
-
-            $manager->persist($comment2);
-//            $article->addComment($comment2);
         });
-        $manager->flush();
 
+        $manager->flush();
     }
 }
