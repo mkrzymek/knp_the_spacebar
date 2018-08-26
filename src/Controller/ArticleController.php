@@ -56,16 +56,9 @@ class ArticleController extends AbstractController
 //            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
 //        }
 
-        $comments = [];
-        foreach ($article->getComments() as $comment) {
-            $comments[] = $comment->getContent();
-        }
-//        dump($comments);die;
-
         return $this->render('article/show.html.twig',
             [
-                'article' => $article,
-                'comments' => $comments
+                'article' => $article
             ]);
     }
 
